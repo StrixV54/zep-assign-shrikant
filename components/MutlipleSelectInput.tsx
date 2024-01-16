@@ -21,7 +21,7 @@ export default function MutlipleSelectInput({
   onSelect?: (items: OptionsType[]) => void;
 }) {
   //create new list with 2 additional fields to check selected and backspace highlighted
-  const checkedOptions = useMemo(
+  const checkedOptions = useMemo<OptionsType[]>(
     () =>
       optionsList.map((item) => ({
         ...item,
@@ -31,7 +31,7 @@ export default function MutlipleSelectInput({
     []
   );
   //options has the main list with all properties
-  const [options, setOptions] = useState<OptionsType[] | null>(checkedOptions);
+  const [options, setOptions] = useState<OptionsType[]>(checkedOptions);
   const [inputValue, setInputValue] = useState<string>("");
 
   //list with selected non-selected data and matching input value
@@ -47,7 +47,7 @@ export default function MutlipleSelectInput({
   //return the selected values
   useEffect(() => {
     onSelect?.(
-      selectedList!.map((item) => {
+      selectedList!.map((item: OptionsType) => {
         const { isChecked, isHighlighted, ...newItem } = item;
         return newItem;
       })
@@ -59,7 +59,7 @@ export default function MutlipleSelectInput({
     setTrue && setInputValue("");
     setTrue && setFocused(false);
     setOptions(
-      options?.map((item) =>
+      options?.map((item: OptionsType) =>
         item.label === givenLabel
           ? { ...item, isChecked: setTrue, isHighlighted: false }
           : { ...item, isHighlighted: false }
@@ -70,7 +70,7 @@ export default function MutlipleSelectInput({
   //remove highlighted element, make it unchecked
   const removeCheckedAndHighlighted = (givenLabel: string) => {
     setOptions(
-      options?.map((item) =>
+      options?.map((item: OptionsType) =>
         item.label === givenLabel
           ? { ...item, isChecked: false, isHighlighted: false }
           : item
@@ -79,7 +79,7 @@ export default function MutlipleSelectInput({
   };
 
   //track focus of input field
-  const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = useState<boolean>(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setTimeout(() => setFocused(false), 500);
 
@@ -111,7 +111,7 @@ export default function MutlipleSelectInput({
           focused ? "border-blue-600" : "border-slate-300"
         }`}
       >
-        {selectedList!.map((item, idx) => (
+        {selectedList!.map((item: OptionsType, idx) => (
           <div
             className={`flex flex-row h-min gap-1 border rounded-full justify-between items-center mr-1 mb-1 ${
               item.isHighlighted ? "bg-blue-400" : "bg-gray-300"
@@ -137,13 +137,13 @@ export default function MutlipleSelectInput({
             onFocus={onFocus}
             onKeyUp={handleBackspace}
             onBlur={onBlur}
-            className="flex-1 w-full outline-none ml-1 min-w-[100px] p-0 m-0"
+            className="flex-1 w-full outline-none ml-1 min-w-[100px]"
             value={inputValue}
             onChange={(e) => setInputValue(e.currentTarget.value)}
           />
           {focused && filteredList?.length! > 0 && (
             <ul className="absolute flex flex-col bg-white w-[400px] translate-y-[10px] rounded-sm border-slate-300 border shadow-md z-10">
-              {filteredList!.map((item, idx) => (
+              {filteredList!.map((item: OptionsType, idx) => (
                 <button
                   key={idx}
                   onClick={() => setChecked(item.label, true)}
