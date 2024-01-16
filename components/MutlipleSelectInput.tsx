@@ -107,14 +107,14 @@ export default function MutlipleSelectInput({
   return (
     <div className="py-2 px-4 w-[800px] border rounded-3xl bg-white">
       <div
-        className={`flex items-center justify-center flex-wrap border-b-[2px] border-slate-300 ${
-          focused && "border-blue-600"
+        className={`flex items-center justify-center flex-wrap border-b-[2px] ${
+          focused ? "border-blue-600" : "border-slate-300"
         }`}
       >
         {selectedList!.map((item, idx) => (
           <div
-            className={`flex flex-row h-min gap-1 border rounded-full justify-between items-center bg-gray-300 mr-1 mb-1 ${
-              item.isHighlighted && "bg-blue-300"
+            className={`flex flex-row h-min gap-1 border rounded-full justify-between items-center mr-1 mb-1 ${
+              item.isHighlighted ? "bg-blue-400" : "bg-gray-300"
             }`}
             key={idx}
           >
