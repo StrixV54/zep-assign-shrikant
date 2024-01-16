@@ -81,6 +81,7 @@ export default function MutlipleSelectInput({
   //track focus of input field
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
+  const onBlur = () => setTimeout(() => setFocused(false), 500);
 
   //handle clicking of backspace
   const handleBackspace: KeyboardEventHandler<HTMLInputElement> | undefined = (
@@ -135,7 +136,7 @@ export default function MutlipleSelectInput({
           <input
             onFocus={onFocus}
             onKeyUp={handleBackspace}
-            onBlur={() => setTimeout(() => setFocused(false), 500)}
+            onBlur={onBlur}
             className="flex-1 w-full outline-none ml-1 min-w-[100px] p-0 m-0"
             value={inputValue}
             onChange={(e) => setInputValue(e.currentTarget.value)}
